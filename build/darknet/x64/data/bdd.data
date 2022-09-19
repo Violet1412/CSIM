@@ -1,7 +1,0 @@
-classes= 5
-train  = data/train.txt
-valid  = data/val.txt
-#difficult = data/difficult_2007_test.txt
-names = data/bdd.names
-backup = backup/
-
