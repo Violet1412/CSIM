@@ -1,12 +1,12 @@
 # CSIM
 We provide the CSIM algorithm, including modified network and structure and trained weight files.
 ## Requirements for Windows, Linux and macOS
-•	CMake 
-•	Powershell  
-•	CUDA >= 10.2:
-•	OpenCV >= 2.4: 
-•	cuDNN >= 8.0.2 
-•	GPU
+•	CMake   
+•	Powershell    
+•	CUDA >= 10.2:  
+•	OpenCV >= 2.4:   
+•	cuDNN >= 8.0.2   
+•	GPU  
 ## How to use on the command line
 If you use build.ps1 script or the makefile (Linux only) you will find darknet in the root directory.
 If you use the deprecated Visual Studio solutions, you will find darknet in the directory \build\darknet\x64.
