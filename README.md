@@ -7,13 +7,10 @@ We provide the CSIM algorithm, including modified network and structure and trai
 •	OpenCV >= 2.4:   
 •	cuDNN >= 8.0.2   
 •	GPU  
-## How to use on the command line
+## Note
 If you use build.ps1 script or the makefile (Linux only) you will find darknet in the root directory.  
 If you use the deprecated Visual Studio solutions, you will find darknet in the directory \build\darknet\x64.  
 If you customize build with CMake GUI, darknet executable will be installed in your preferred folder.  
-•	Training: ./darknet detector train cfg/your.data your.cfg yolov4.conv.137   
-•	To check accuracy mAP@IoU=50: ./darknet detector map data/obj.data yolo-obj.cfg backup\yolo-obj.weights  
-•	To check accuracy mAP@IoU=75: ./darknet detector map data/obj.data yolo-obj.cfg backup\yolo-obj.weights -iou_thresh 0.75  
 
 ## How to train (to detect your custom objects)
 For training cfg/yolov4-custom.cfg download the pre-trained weights-file 
