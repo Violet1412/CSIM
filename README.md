@@ -8,19 +8,32 @@ We provide the CSIM algorithm, including modified network and structure and trai
 •	cuDNN >= 8.0.2   
 •	GPU  
 ## How to use on the command line
-If you use build.ps1 script or the makefile (Linux only) you will find darknet in the root directory.
-If you use the deprecated Visual Studio solutions, you will find darknet in the directory \build\darknet\x64.
-If you customize build with CMake GUI, darknet executable will be installed in your preferred folder.
-•	CSIM BDD100k- image: ./darknet detector test cfg/bdd.data cfg/csim.cfg csim_final.weights -thresh 0.25
-•	Output coordinates of objects: ./darknet detector test cfg/coco.data yolov4.cfg yolov4.weights -ext_output dog.jpg
-•	Yolo v4 COCO - video: ./darknet detector demo cfg/coco.data cfg/yolov4.cfg yolov4.weights -ext_output test.mp4
-•	Train on Amazon EC2, to see mAP & Loss-chart using URL like: http://ec2-35-160-228-91.us-west-2.compute.amazonaws.com:8090 in the Chrome/Firefox (Darknet should be compiled with OpenCV): ./darknet detector train cfg/coco.data yolov4.cfg yolov4.conv.137 -dont_show -mjpeg_port 8090 -map
-•	Remember to put data/9k.tree and data/coco9k.map under the same folder of your app if you use the cpp api to build an app
-•	To process a list of images data/train.txt and save results of detection to result.json file use: ./darknet detector test cfg/coco.data cfg/yolov4.cfg yolov4.weights -ext_output -dont_show -out result.json < data/train.txt
-•	To process a list of images data/train.txt and save results of detection to result.txt use: ./darknet detector test cfg/coco.data cfg/yolov4.cfg yolov4.weights -dont_show -ext_output < data/train.txt > result.txt
-•	Pseudo-labelling - to process a list of images data/new_train.txt and save results of detection in Yolo training format for each image as label <image_name>.txt (in this way you can increase the amount of training data) use: ./darknet detector test cfg/coco.data cfg/yolov4.cfg yolov4.weights -thresh 0.25 -dont_show -save_labels < data/new_train.txt
-•	To check accuracy mAP@IoU=50: ./darknet detector map data/obj.data yolo-obj.cfg backup\yolo-obj_7000.weights
-•	To check accuracy mAP@IoU=75: ./darknet detector map data/obj.data yolo-obj.cfg backup\yolo-obj_7000.weights -iou_thresh 0.75
+If you use build.ps1 script or the makefile (Linux only) you will find darknet in the root directory.  
+If you use the deprecated Visual Studio solutions, you will find darknet in the directory \build\darknet\x64.  
+If you customize build with CMake GUI, darknet executable will be installed in your preferred folder.  
+•	Training: ./darknet detector train cfg/your.data your.cfg yolov4.conv.137   
+•	To check accuracy mAP@IoU=50: ./darknet detector map data/obj.data yolo-obj.cfg backup\yolo-obj.weights  
+•	To check accuracy mAP@IoU=75: ./darknet detector map data/obj.data yolo-obj.cfg backup\yolo-obj.weights -iou_thresh 0.75  
+
+## How to train (to detect your custom objects)
+For training cfg/yolov4-custom.cfg download the pre-trained weights-file 
+Create file yolo-obj.cfg and:  
+change line batch   
+change line subdivisions  
+change line max_batches to (classes*2000, but not less than number of training images and not less than 6000), f.e. max_batches=6000 if you train for 3 classes)  
+change line steps to 80% and 90% of max_batches, f.e. steps=4800,5400  
+change line classes= to your number of objects in each of 3 [yolo]-layers:  
+change [filters=255] to filters=(classes + 5)x3 in the 3 [convolutional] before each [yolo] layer, keep in mind that it only has to be the last [convolutional] before each of the [yolo] layers.  
+Create file obj.names in the directory build\darknet\x64\data\, with objects names - each in new line  
+Create file obj.data in the directory build\darknet\x64\data\, containing (where classes = number of objects):  
+Put image-files (.jpg) of your objects in the directory build\darknet\x64\data\obj\  
+You should label each object on images from your dataset. Use this visual GUI-software for marking bounded boxes of objects and generating annotation files  
+Create file train.txt in directory build\darknet\x64\data\, with filenames of your images, each filename in new line, with path relative to darknet.exe, for example containing:  
+Download pre-trained weights for the convolutional layers and put to the directory build\darknet\x64  
+
+Start training by using the command line: darknet.exe detector train data/csim.data bdd.cfg csim_final.weights    
+Note: If you changed width= or height= in your cfg-file, then new width and height must be divisible by 32.   
+Note: After training use such command for detection: darknet.exe detector test data/bdd.data csim.cfg csim_final.weights    
 
 ## Dataset and trained weight file
 We provide our dataset and trained weight file.
