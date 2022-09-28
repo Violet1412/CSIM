@@ -35,7 +35,7 @@ Note: After training use such command for detection: darknet.exe detector test d
 ## Dataset and trained weight file
 We provide our dataset and trained weight file.  
 [BDD100k-selfmade](https://pan.baidu.com/s/10CbIF-zQ5X-h7bh_uGSOMg)Extraction code：dhyl  
-[Weight file](https://pan.baidu.com/s/1xl-1TIj3zKEoOxGCuaXWcA)Extraction code：86m8
+[Weight file](https://pan.baidu.com/s/1TcLc6o4mqcei5ocRbecRnw)Extraction code：86m8
 
 
 
